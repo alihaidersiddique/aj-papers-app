@@ -1,0 +1,168 @@
+[
+  {
+    "id": 0,
+    "courseName": "Mathematics D",
+    "courseCode": 4024,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": [
+      {
+        "year": "2022",
+        "papers": [
+          {
+            "course": "Mathematics D",
+            "type": "QP",
+            "name": "4024_s22_qp.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Summer",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_s22_qp_22.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "QP",
+            "name": "4024_w22_qp.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Winter",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_w22_qp_22.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "MS",
+            "name": "4024_s22_ms.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Summer",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_s22_ms_22.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "MS",
+            "name": "4024_w22_ms.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Winter",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_w22_ms_22.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "ER",
+            "name": "4024_s22_er.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Summer",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_s22_er.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "ER",
+            "name": "4024_w22_er.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Winter",
+            "year": "2022",
+            "link": "",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "GT",
+            "name": "4024_s22_gt.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Summer",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_s22_gt.pdf",
+            "filePath": ""
+          },
+          {
+            "course": "Mathematics D",
+            "type": "GT",
+            "name": "4024_w22_gt.pdf",
+            "paper": "2",
+            "variant": "2",
+            "season": "Winter",
+            "year": "2022",
+            "link": "https://papers.gceguide.com/O%20Levels/Mathematics%20D%20(4024)/2022/4024_w22_gt.pdf",
+            "filePath": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "courseName": "Mathematics - Additional",
+    "courseCode": 4037,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 2,
+    "courseName": "Physics",
+    "courseCode": 5054,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 3,
+    "courseName": "Chemistry",
+    "courseCode": 5070,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 4,
+    "courseName": "Islamiat",
+    "courseCode": 2058,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 5,
+    "courseName": "History",
+    "courseCode": 2059,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 6,
+    "courseName": "Geography ",
+    "courseCode": 2217,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 7,
+    "courseName": "English Language",
+    "courseCode": 1123,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  },
+  {
+    "id": 8,
+    "courseName": "Urdu",
+    "courseCode": 3248,
+    "level": "O Level",
+    "isBookmarked": false,
+    "yearlyPapers": []
+  }
+]
