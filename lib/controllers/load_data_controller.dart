@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' as root_bundle;
 
 import 'dart:convert';
 
+import '../models/paper_model.dart';
 import '../models/subject_model.dart';
 
 class LoadDataController extends GetxController {
@@ -40,5 +41,74 @@ class LoadDataController extends GetxController {
       await box.put('myData', olevels);
     }
     await box.close();
+  }
+
+  void updateFilePath(
+      String courseName, String year, String paperName, String filePath) async {
+    final box = await Hive.openBox('myBox');
+    final data = box.get('myData');
+    if (data is List<dynamic>) {
+      final subjectModels = data.cast<SubjectModel>();
+      for (final subject in subjectModels) {
+        if (subject.courseName == courseName) {
+          for (final yearlyPaper in subject.yearlyPapers) {
+            if (yearlyPaper.year == year) {
+              for (int i = 0; i < yearlyPaper.papers.length; i++) {
+                if (yearlyPaper.papers[i].name == paperName) {
+                  final updatedPaper = PaperModel(
+                    course: yearlyPaper.papers[i].course,
+                    type: yearlyPaper.papers[i].type,
+                    name: yearlyPaper.papers[i].name,
+                    paper: yearlyPaper.papers[i].paper,
+                    variant: yearlyPaper.papers[i].variant,
+                    season: yearlyPaper.papers[i].season,
+                    year: yearlyPaper.papers[i].year,
+                    link: yearlyPaper.papers[i].link,
+                    filePath: filePath,
+                  );
+                  yearlyPaper.papers[i] = updatedPaper;
+                  break;
+                }
+              }
+              break;
+            }
+          }
+          break;
+        }
+      }
+      olevels.value = subjectModels;
+      await box.put('myData', subjectModels);
+    }
+    await box.close();
+  }
+
+  Future<bool> checkFilePath(
+      String courseName, String year, String paperName, String filePath) async {
+    final box = await Hive.openBox('myBox');
+    final data = box.get('myData');
+    if (data is List<dynamic>) {
+      final subjectModels = data.cast<SubjectModel>();
+      for (final subject in subjectModels) {
+        if (subject.courseName == courseName) {
+          for (final yearlyPaper in subject.yearlyPapers) {
+            if (yearlyPaper.year == year) {
+              for (int i = 0; i < yearlyPaper.papers.length; i++) {
+                if (yearlyPaper.papers[i].name == paperName) {
+                  if (yearlyPaper.papers[i].filePath.isEmpty) {
+                    await box.close();
+                    return true;
+                  } else {
+                    await box.close();
+                    return false;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    await box.close();
+    return false;
   }
 }

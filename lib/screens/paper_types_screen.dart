@@ -1,7 +1,8 @@
+import 'package:aj_papers_app/controllers/load_data_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:get/get.dart';
 import '../models/paper_model.dart';
 import '../widgets/add_bar_widget.dart';
 import '../widgets/medium_text_widget.dart';
@@ -26,9 +27,12 @@ class _OlevelPastpapersState extends ConsumerState<PaperTypesScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
 
+  final LoadDataController _loadDataController = Get.find();
+
   @override
   void initState() {
     super.initState();
+    _loadDataController.loadOlevelsData();
     tabController = TabController(length: 5, vsync: this);
   }
 
@@ -94,17 +98,7 @@ class _OlevelPastpapersState extends ConsumerState<PaperTypesScreen>
         final paper =
             filterType == "ALL" ? subject[index] : filteredPapers[index];
 
-        return PaperCard(
-          course: paper.course,
-          type: paper.type,
-          name: paper.name,
-          paper: paper.paper,
-          link: paper.link,
-          season: paper.season,
-          year: paper.year,
-          variant: paper.variant,
-          filePath: paper.filePath,
-        );
+        return PaperCard(paper: paper);
       },
     );
   }

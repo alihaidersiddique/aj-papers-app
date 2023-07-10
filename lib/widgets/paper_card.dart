@@ -1,37 +1,33 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:aj_papers_app/models/paper_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as root_bundle;
+import 'package:get/get.dart';
 
+import '../controllers/load_data_controller.dart';
 import '../utils/app_colors.dart';
 
-class PaperCard extends StatelessWidget {
-  const PaperCard({
-    required this.course,
-    required this.type,
-    required this.name,
+class PaperCard extends StatefulWidget {
+  PaperCard({
     required this.paper,
-    required this.link,
-    required this.season,
-    required this.year,
-    required this.variant,
-    required this.filePath,
     super.key,
   });
 
-  final String course;
-  final String type;
-  final String name;
-  final String paper;
-  final String link;
-  final String season;
-  final String year;
-  final String variant;
-  final String filePath;
+  PaperModel paper;
+
+  @override
+  State<PaperCard> createState() => _PaperCardState();
+}
+
+class _PaperCardState extends State<PaperCard> {
+  final LoadDataController _loadDataController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("checking that filePath is not null");
+    debugPrint(widget.paper.toJson().toString());
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
@@ -39,7 +35,28 @@ class PaperCard extends StatelessWidget {
       ),
       elevation: 5,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _loadDataController.updateFilePath(
+            widget.paper.course,
+            widget.paper.year,
+            widget.paper.name,
+            widget.paper.name,
+          );
+
+          setState(() {
+            widget.paper = PaperModel(
+              course: widget.paper.course,
+              year: widget.paper.year,
+              name: widget.paper.name,
+              paper: widget.paper.paper,
+              season: widget.paper.season,
+              type: widget.paper.type,
+              variant: widget.paper.variant,
+              link: widget.paper.link,
+              filePath: widget.paper.name,
+            );
+          });
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -51,14 +68,14 @@ class PaperCard extends StatelessWidget {
                 vertical: 5,
               ),
               child: Text(
-                '$season $year',
+                '${widget.paper.season} ${widget.paper.year}',
                 textScaleFactor: 1.5,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             Text(
-              type,
+              widget.paper.type,
               textScaleFactor: 2.0,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -70,8 +87,8 @@ class PaperCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Paper $paper'),
-                  Text('Variant $variant'),
+                  Text('Paper ${widget.paper.paper}'),
+                  Text('Variant ${widget.paper.variant}'),
                 ],
               ),
             ),
