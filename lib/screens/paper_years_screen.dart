@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 
 import '../models/paper_model.dart';
 import '../models/yearly_paper_model.dart';
+import '../utils/app_colors.dart';
 import '../utils/app_texts.dart';
 import '../widgets/add_bar_widget.dart';
 
@@ -12,16 +13,37 @@ class PaperYearsScreen extends ConsumerWidget {
     super.key,
     required this.yearlyPapers,
     required this.level,
+    required this.course,
   });
 
   final List<YearlyPaperModel> yearlyPapers;
 
   final String level;
+  final String course;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text("$level  ( Pastpapers )")),
+      appBar: AppBar(
+        title: Text.rich(
+          TextSpan(
+            text: level,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            children: [
+              TextSpan(
+                text: "\n$course",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: yearlyPapers.isEmpty
@@ -48,8 +70,10 @@ class PaperYearsScreen extends ConsumerWidget {
                       try {
                         List<PaperModel> lists = [];
                         subject.papers.map((e) => lists.add(e)).toList();
-                        Get.toNamed(AppText.paperTypes,
-                            arguments: [lists, level]);
+                        Get.toNamed(
+                          AppText.paperTypes,
+                          arguments: [lists, level, course],
+                        );
                       } catch (e) {
                         debugPrint('finding bug');
                         debugPrint(e.toString());

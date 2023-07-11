@@ -1,58 +1,88 @@
+import 'package:aj_papers_app/utils/app_texts.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/load_data_controller.dart';
 import '../utils/app_colors.dart';
 
 class AppDrawerWidget extends StatelessWidget {
-  const AppDrawerWidget({super.key});
+  AppDrawerWidget({super.key});
+
+  final LoadDataController _loadDataController = Get.put(LoadDataController());
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.black,
-      width: 250.0,
-      child: ListView(
+      backgroundColor: Colors.white,
+      width: 200.0,
+      child: Column(
         children: [
-          const Text(
-            "AJ Papers",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 30.0,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20.0),
-          ListTile(
-            tileColor: AppColors.primaryColor,
-            title: const Text(
-              'O Levels',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.only(top: 40.0, bottom: 10.0),
+            child: const Center(
+              child: Text(
+                "AJ Papers",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                ),
               ),
             ),
-            onTap: () {
-              // Get.toNamed(AppText.olevels);
+          ),
+          const SizedBox(height: 20.0),
+          DrawerMenuWidget(
+            icon: Icons.school,
+            title: AppText.olevels,
+            onPress: () {
+              final subjects = _loadDataController.olevels;
+              Get.toNamed(AppText.subjects, arguments: ["O LEVELS", subjects]);
               Navigator.pop(context);
             },
           ),
-          const SizedBox(height: 20.0),
-          ListTile(
-            tileColor: AppColors.primaryColor,
-            title: const Text(
-              'A Levels',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-            onTap: () {
-              // Get.toNamed(AppText.alevels);
+          const Divider(),
+          DrawerMenuWidget(
+            icon: Icons.school,
+            title: AppText.alevels,
+            onPress: () {
+              final subjects = _loadDataController.olevels;
+              Get.toNamed(AppText.subjects, arguments: ["A LEVELS", subjects]);
               Navigator.pop(context);
             },
           ),
+          const Divider(),
         ],
       ),
+    );
+  }
+}
+
+class DrawerMenuWidget extends StatelessWidget {
+  const DrawerMenuWidget({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onPress,
+  });
+
+  final IconData icon;
+  final String title;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: AppColors.primaryColor,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 20.0,
+          color: Colors.black,
+        ),
+      ),
+      onTap: onPress,
     );
   }
 }

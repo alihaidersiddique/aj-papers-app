@@ -26,12 +26,18 @@ class SubjectsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const AppDrawerWidget(),
+      drawer: AppDrawerWidget(),
       appBar: AppBar(
-        title: Text(level),
+        title: Text(
+          level,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            onPressed: () => Get.toNamed(AppText.subjectsBookmarked),
+            onPressed: () =>
+                Get.toNamed(AppText.subjectsBookmarked, arguments: level),
             icon: const Icon(Icons.collections_bookmark_outlined),
           ),
         ],
@@ -71,7 +77,11 @@ class SubjectsScreen extends StatelessWidget {
                     ),
                     onTap: () => Get.toNamed(
                       AppText.paperItems,
-                      arguments: [subject.yearlyPapers, level],
+                      arguments: [
+                        subject.yearlyPapers,
+                        level,
+                        "${subject.courseName} (${subject.courseCode})",
+                      ],
                     ),
                   );
                 },

@@ -81,34 +81,4 @@ class LoadDataController extends GetxController {
     }
     await box.close();
   }
-
-  Future<bool> checkFilePath(
-      String courseName, String year, String paperName, String filePath) async {
-    final box = await Hive.openBox('myBox');
-    final data = box.get('myData');
-    if (data is List<dynamic>) {
-      final subjectModels = data.cast<SubjectModel>();
-      for (final subject in subjectModels) {
-        if (subject.courseName == courseName) {
-          for (final yearlyPaper in subject.yearlyPapers) {
-            if (yearlyPaper.year == year) {
-              for (int i = 0; i < yearlyPaper.papers.length; i++) {
-                if (yearlyPaper.papers[i].name == paperName) {
-                  if (yearlyPaper.papers[i].filePath.isEmpty) {
-                    await box.close();
-                    return true;
-                  } else {
-                    await box.close();
-                    return false;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    await box.close();
-    return false;
-  }
 }

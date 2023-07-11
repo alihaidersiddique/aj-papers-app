@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../models/paper_model.dart';
+import '../utils/app_colors.dart';
 import '../widgets/add_bar_widget.dart';
 import '../widgets/medium_text_widget.dart';
 import '../widgets/paper_card.dart';
@@ -13,11 +14,13 @@ class PaperTypesScreen extends ConsumerStatefulWidget {
     super.key,
     required this.papers,
     required this.level,
+    required this.course,
   });
 
   final List<PaperModel> papers;
 
   final String level;
+  final String course;
 
   @override
   ConsumerState<PaperTypesScreen> createState() => _OlevelPastpapersState();
@@ -46,9 +49,23 @@ class _OlevelPastpapersState extends ConsumerState<PaperTypesScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: Text("${widget.level}\n${widget.papers[0].course}"),
+        title: Text.rich(
+          TextSpan(
+            text: widget.level,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            children: [
+              TextSpan(
+                text: "\n${widget.course}",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -97,7 +114,6 @@ class _OlevelPastpapersState extends ConsumerState<PaperTypesScreen>
       itemBuilder: (BuildContext context, int index) {
         final paper =
             filterType == "ALL" ? subject[index] : filteredPapers[index];
-
         return PaperCard(paper: paper);
       },
     );

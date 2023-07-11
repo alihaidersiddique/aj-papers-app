@@ -10,47 +10,80 @@ import '../controllers/load_data_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-class PaperCard extends StatelessWidget {
-  final PaperModel paper;
+class PaperCard extends StatefulWidget {
+  PaperModel paper;
 
   PaperCard({
     required this.paper,
     super.key,
   });
 
+  @override
+  State<PaperCard> createState() => _PaperCardState();
+}
+
+class _PaperCardState extends State<PaperCard> {
   final LoadDataController _loadDataController = Get.find();
 
   Future<void> openPDF(String url, String fileName) async {
-    if (paper.filePath.isEmpty) {
+    if (widget.paper.filePath.isEmpty) {
       final filePath = await downloadPDF(url, fileName);
       _loadDataController.updateFilePath(
-        paper.course,
-        paper.year,
-        paper.name,
+        widget.paper.course,
+        widget.paper.year,
+        widget.paper.name,
         filePath,
       );
       Get.toNamed(
         AppText.pdfScreen,
         arguments: filePath,
       );
+
+      setState(() {
+        widget.paper = PaperModel(
+          course: widget.paper.course,
+          type: widget.paper.type,
+          name: widget.paper.name,
+          paper: widget.paper.paper,
+          variant: widget.paper.variant,
+          season: widget.paper.season,
+          year: widget.paper.year,
+          link: widget.paper.link,
+          filePath: filePath,
+        );
+      });
     } else {
-      if (await doesFileExist(paper.filePath)) {
+      if (await doesFileExist(widget.paper.filePath)) {
         Get.toNamed(
           AppText.pdfScreen,
-          arguments: paper.filePath,
+          arguments: widget.paper.filePath,
         );
       } else {
         final filePath = await downloadPDF(url, fileName);
         _loadDataController.updateFilePath(
-          paper.course,
-          paper.year,
-          paper.name,
+          widget.paper.course,
+          widget.paper.year,
+          widget.paper.name,
           filePath,
         );
         Get.toNamed(
           AppText.pdfScreen,
           arguments: filePath,
         );
+
+        setState(() {
+          widget.paper = PaperModel(
+            course: widget.paper.course,
+            type: widget.paper.type,
+            name: widget.paper.name,
+            paper: widget.paper.paper,
+            variant: widget.paper.variant,
+            season: widget.paper.season,
+            year: widget.paper.year,
+            link: widget.paper.link,
+            filePath: filePath,
+          );
+        });
       }
     }
   }
@@ -83,7 +116,7 @@ class PaperCard extends StatelessWidget {
       ),
       elevation: 5,
       child: InkWell(
-        onTap: () => openPDF(paper.link, paper.name),
+        onTap: () => openPDF(widget.paper.link, widget.paper.name),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -95,14 +128,14 @@ class PaperCard extends StatelessWidget {
                 vertical: 5,
               ),
               child: Text(
-                '${paper.season} ${paper.year}',
+                '${widget.paper.season} ${widget.paper.year}',
                 textScaleFactor: 1.5,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             Text(
-              paper.type,
+              widget.paper.type,
               textScaleFactor: 2.0,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -114,8 +147,8 @@ class PaperCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Paper ${paper.paper}'),
-                  Text('Variant ${paper.variant}'),
+                  Text('Paper ${widget.paper.paper}'),
+                  Text('Variant ${widget.paper.variant}'),
                 ],
               ),
             ),

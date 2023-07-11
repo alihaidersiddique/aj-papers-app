@@ -28,6 +28,7 @@ final appRoutes = [
     page: () => PaperItemsScreen(
       yearlyPapers: Get.arguments[0],
       level: Get.arguments[1],
+      course: Get.arguments[2],
     ),
   ),
   GetPage(
@@ -35,6 +36,7 @@ final appRoutes = [
     page: () => PaperYearsScreen(
       yearlyPapers: Get.arguments[0],
       level: Get.arguments[1],
+      course: Get.arguments[2],
     ),
   ),
   GetPage(
@@ -42,11 +44,12 @@ final appRoutes = [
     page: () => PaperTypesScreen(
       papers: Get.arguments[0],
       level: Get.arguments[1],
+      course: Get.arguments[2],
     ),
   ),
   GetPage(
     name: AppText.subjectsBookmarked,
-    page: () => BookmarksScreen(),
+    page: () => BookmarksScreen(level: Get.arguments),
   ),
   GetPage(
     name: AppText.pdfScreen,
@@ -54,11 +57,17 @@ final appRoutes = [
   ),
   GetPage(
     name: AppText.lectures,
-    page: () => LecturesScreen(level: Get.arguments),
+    page: () => LecturesScreen(
+      level: Get.arguments[0],
+      course: Get.arguments[1],
+    ),
   ),
   GetPage(
     name: AppText.notes,
-    page: () => NotesScreen(level: Get.arguments),
+    page: () => NotesScreen(
+      level: Get.arguments[0],
+      course: Get.arguments[1],
+    ),
   ),
   // GetPage(
   //   name: AppText.pdfDownloader,

@@ -5,20 +5,46 @@ import 'package:get/route_manager.dart';
 
 import 'package:aj_papers_app/models/yearly_paper_model.dart';
 
+import '../utils/app_colors.dart';
 import '../utils/app_texts.dart';
 import '../widgets/add_bar_widget.dart';
+import '../widgets/menu_tile_widget.dart';
 
 class PaperItemsScreen extends ConsumerWidget {
-  const PaperItemsScreen(
-      {super.key, required this.yearlyPapers, required this.level});
+  const PaperItemsScreen({
+    super.key,
+    required this.yearlyPapers,
+    required this.level,
+    required this.course,
+  });
 
   final List<YearlyPaperModel> yearlyPapers;
   final String level;
+  final String course;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text(level)),
+      appBar: AppBar(
+        title: Text.rich(
+          TextSpan(
+            text: level,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            children: [
+              TextSpan(
+                text: "\n$course",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Column(
         children: [
           MenuTileWidget(
@@ -27,7 +53,7 @@ class PaperItemsScreen extends ConsumerWidget {
             onTap: () {
               Get.toNamed(
                 AppText.paperYears,
-                arguments: [yearlyPapers, level],
+                arguments: [yearlyPapers, level, course],
               );
             },
           ),
@@ -37,7 +63,7 @@ class PaperItemsScreen extends ConsumerWidget {
             onTap: () {
               Get.toNamed(
                 AppText.lectures,
-                arguments: level,
+                arguments: [level, course],
               );
             },
           ),
@@ -47,54 +73,13 @@ class PaperItemsScreen extends ConsumerWidget {
             onTap: () {
               Get.toNamed(
                 AppText.notes,
-                arguments: level,
+                arguments: [level, course],
               );
             },
           ),
         ],
       ),
       bottomNavigationBar: const AddBarWidget(),
-    );
-  }
-}
-
-class MenuTileWidget extends StatelessWidget {
-  const MenuTileWidget({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.onTap,
-  }) : super(key: key);
-
-  final String title;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 5,
-        child: InkWell(
-          onTap: onTap,
-          child: ListTile(
-            leading: Icon(icon),
-            title: Text(
-              title,
-              style: const TextStyle(fontSize: 22.0),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

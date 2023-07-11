@@ -8,7 +8,12 @@ import '../widgets/add_bar_widget.dart';
 import '../widgets/subject_tile_widget.dart';
 
 class BookmarksScreen extends StatelessWidget {
-  BookmarksScreen({super.key});
+  final String level;
+
+  BookmarksScreen({
+    super.key,
+    required this.level,
+  });
 
   final LoadDataController _loadDataController = Get.put(LoadDataController());
 
@@ -16,7 +21,24 @@ class BookmarksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Bookmarks"),
+        title: Text.rich(
+          TextSpan(
+            text: level,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            children: const [
+              TextSpan(
+                text: "\nBookmarks",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Obx(
         () {
@@ -59,7 +81,11 @@ class BookmarksScreen extends StatelessWidget {
                   ),
                   onTap: () => Get.toNamed(
                     AppText.paperItems,
-                    arguments: subject.yearlyPapers,
+                    arguments: [
+                      subject.yearlyPapers,
+                      level,
+                      "${subject.courseName} (${subject.courseCode})",
+                    ],
                   ),
                 );
               },

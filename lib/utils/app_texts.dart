@@ -1,8 +1,8 @@
 class AppText {
   static const oLogo = "assets/images/o-logo.png";
   static const aLogo = "assets/images/a-logo.png";
-  static const olevels = "O Levels";
-  static const alevels = "A Levels";
+  static const olevels = "O LEVELS";
+  static const alevels = "A LEVELS";
   static const subjects = '/subjects';
   static const bookmarked = '/olevel-subjects/bookmarks';
   static const paperItems = "/paper-items";
