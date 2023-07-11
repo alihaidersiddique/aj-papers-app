@@ -1,6 +1,7 @@
 import 'package:aj_papers_app/models/subject_model.dart';
 import 'package:aj_papers_app/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,6 +28,7 @@ class MainApp extends StatelessWidget {
       getPages: appRoutes,
       initialRoute: '/',
       defaultTransition: Transition.fadeIn,
+      builder: EasyLoading.init(),
     );
   }
 }

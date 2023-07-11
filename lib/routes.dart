@@ -60,4 +60,8 @@ final appRoutes = [
     name: AppText.notes,
     page: () => NotesScreen(level: Get.arguments),
   ),
+  // GetPage(
+  //   name: AppText.pdfDownloader,
+  //   page: () => PdfDownloader(paper: Get.arguments),
+  // ),
 ];

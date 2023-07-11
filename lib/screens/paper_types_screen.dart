@@ -46,9 +46,9 @@ class _OlevelPastpapersState extends ConsumerState<PaperTypesScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "${widget.level}  ( ${widget.papers[0].course} )",
-          maxLines: 2,
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 5.0),
+          child: Text("${widget.level}\n${widget.papers[0].course}"),
         ),
         actions: [
           IconButton(

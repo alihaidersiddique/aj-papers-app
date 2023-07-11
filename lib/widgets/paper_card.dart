@@ -1,33 +1,81 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:aj_papers_app/models/paper_model.dart';
+import 'package:aj_papers_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as root_bundle;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../controllers/load_data_controller.dart';
-import '../utils/app_colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
-class PaperCard extends StatefulWidget {
+class PaperCard extends StatelessWidget {
+  final PaperModel paper;
+
   PaperCard({
     required this.paper,
     super.key,
   });
 
-  PaperModel paper;
-
-  @override
-  State<PaperCard> createState() => _PaperCardState();
-}
-
-class _PaperCardState extends State<PaperCard> {
   final LoadDataController _loadDataController = Get.find();
+
+  Future<void> openPDF(String url, String fileName) async {
+    if (paper.filePath.isEmpty) {
+      final filePath = await downloadPDF(url, fileName);
+      _loadDataController.updateFilePath(
+        paper.course,
+        paper.year,
+        paper.name,
+        filePath,
+      );
+      Get.toNamed(
+        AppText.pdfScreen,
+        arguments: filePath,
+      );
+    } else {
+      if (await doesFileExist(paper.filePath)) {
+        Get.toNamed(
+          AppText.pdfScreen,
+          arguments: paper.filePath,
+        );
+      } else {
+        final filePath = await downloadPDF(url, fileName);
+        _loadDataController.updateFilePath(
+          paper.course,
+          paper.year,
+          paper.name,
+          filePath,
+        );
+        Get.toNamed(
+          AppText.pdfScreen,
+          arguments: filePath,
+        );
+      }
+    }
+  }
+
+  Future<String> downloadPDF(String url, String fileName) async {
+    EasyLoading.show(status: 'Downloading file...');
+
+    final response = await http.get(Uri.parse(url));
+    final bytes = response.bodyBytes;
+
+    final appDir = await getApplicationDocumentsDirectory();
+    final file = File('${appDir.path}/$fileName');
+    await file.writeAsBytes(bytes);
+
+    EasyLoading.dismiss();
+    return file.path;
+  }
+
+  Future<bool> doesFileExist(String filePath) async {
+    final file = File(filePath);
+    return await file.exists();
+  }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("checking that filePath is not null");
-    debugPrint(widget.paper.toJson().toString());
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
@@ -35,28 +83,7 @@ class _PaperCardState extends State<PaperCard> {
       ),
       elevation: 5,
       child: InkWell(
-        onTap: () {
-          _loadDataController.updateFilePath(
-            widget.paper.course,
-            widget.paper.year,
-            widget.paper.name,
-            widget.paper.name,
-          );
-
-          setState(() {
-            widget.paper = PaperModel(
-              course: widget.paper.course,
-              year: widget.paper.year,
-              name: widget.paper.name,
-              paper: widget.paper.paper,
-              season: widget.paper.season,
-              type: widget.paper.type,
-              variant: widget.paper.variant,
-              link: widget.paper.link,
-              filePath: widget.paper.name,
-            );
-          });
-        },
+        onTap: () => openPDF(paper.link, paper.name),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -68,14 +95,14 @@ class _PaperCardState extends State<PaperCard> {
                 vertical: 5,
               ),
               child: Text(
-                '${widget.paper.season} ${widget.paper.year}',
+                '${paper.season} ${paper.year}',
                 textScaleFactor: 1.5,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             Text(
-              widget.paper.type,
+              paper.type,
               textScaleFactor: 2.0,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -87,8 +114,8 @@ class _PaperCardState extends State<PaperCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Paper ${widget.paper.paper}'),
-                  Text('Variant ${widget.paper.variant}'),
+                  Text('Paper ${paper.paper}'),
+                  Text('Variant ${paper.variant}'),
                 ],
               ),
             ),
@@ -96,28 +123,5 @@ class _PaperCardState extends State<PaperCard> {
         ),
       ),
     );
-  }
-
-  void saveFilePathToJson(
-      String filePath, String course, String year, String name) async {
-    final jsonString =
-        await root_bundle.rootBundle.loadString('assets/olevel_subjects.json');
-    final jsonData = jsonDecode(jsonString);
-    final yearlyPapers =
-        jsonData.firstWhere((c) => c['courseName'] == course)['yearlyPapers'];
-    final papers = yearlyPapers.firstWhere((p) => p['year'] == year)['papers'];
-    final paper = papers.firstWhere((p) => p['name'] == name);
-    paper['filePath'] = filePath;
-    final updatedJsonString = jsonEncode(jsonData);
-    final newFile =
-        await root_bundle.rootBundle.loadString('assets/olevel_subjects.json');
-    final file = File(newFile);
-    await file.writeAsString(updatedJsonString);
-  }
-
-  // Future<String> downloadFile(String fileUrl, String fileName) async {
-  Future<bool> doesFileExist(String filePath) async {
-    final file = File(filePath);
-    return file.existsSync();
   }
 }
