@@ -49,7 +49,7 @@ class PaperItemsScreen extends ConsumerWidget {
         children: [
           MenuTileWidget(
             title: "Pastpapers",
-            icon: Icons.document_scanner,
+            icon: Icons.document_scanner_outlined,
             onTap: () {
               Get.toNamed(
                 AppText.paperYears,
@@ -59,7 +59,7 @@ class PaperItemsScreen extends ConsumerWidget {
           ),
           MenuTileWidget(
             title: "Lectures",
-            icon: Icons.video_collection,
+            icon: Icons.video_collection_outlined,
             onTap: () {
               Get.toNamed(
                 AppText.lectures,
@@ -69,7 +69,7 @@ class PaperItemsScreen extends ConsumerWidget {
           ),
           MenuTileWidget(
             title: "Notes",
-            icon: Icons.notes,
+            icon: Icons.notes_outlined,
             onTap: () {
               Get.toNamed(
                 AppText.notes,

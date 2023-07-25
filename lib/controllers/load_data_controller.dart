@@ -32,13 +32,21 @@ class LoadDataController extends GetxController {
   }
 
   Future<void> updateBookmarkStatus(
-      SubjectModel subject, bool isBookmarked) async {
+    SubjectModel subject,
+    bool isBookmarked,
+    List<SubjectModel> filteredSubjects,
+  ) async {
     final box = await Hive.openBox('myBox');
     final index = olevels.indexOf(subject);
     if (index != -1) {
       final updatedSubject = subject.copyWith(isBookmarked: isBookmarked);
       olevels[index] = updatedSubject;
       await box.put('myData', olevels);
+
+      final filteredIndex = filteredSubjects.indexOf(subject);
+      if (filteredIndex != -1) {
+        filteredSubjects[filteredIndex] = updatedSubject;
+      }
     }
     await box.close();
   }

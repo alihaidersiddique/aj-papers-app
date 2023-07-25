@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../utils/app_colors.dart';
 import 'medium_text_widget.dart';
 
@@ -13,7 +14,7 @@ class SubjectTileWidget extends StatelessWidget {
 
   final MediumTextWidget courseCode;
   final MediumTextWidget courseName;
-  final IconButton bookmarkIcon;
+  final Widget bookmarkIcon;
   final VoidCallback onTap;
 
   @override

@@ -3,6 +3,7 @@ import 'package:aj_papers_app/utils/app_texts.dart';
 import 'package:aj_papers_app/widgets/medium_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/filtered_subjects_controller.dart';
 import '../utils/app_colors.dart';
 import '../widgets/add_bar_widget.dart';
 import '../widgets/subject_tile_widget.dart';
@@ -16,6 +17,8 @@ class BookmarksScreen extends StatelessWidget {
   });
 
   final LoadDataController _loadDataController = Get.put(LoadDataController());
+
+  final FilteredSubjectsController _filteredSubjectsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,7 @@ class BookmarksScreen extends StatelessWidget {
                       _loadDataController.updateBookmarkStatus(
                         subject,
                         !subject.isBookmarked,
+                        _filteredSubjectsController.filteredSubjects,
                       );
                     },
                     icon: Icon(

@@ -1,3 +1,4 @@
+import 'package:aj_papers_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MenuTileWidget extends StatelessWidget {
@@ -25,7 +26,7 @@ class MenuTileWidget extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: ListTile(
-            leading: Icon(icon),
+            leading: Icon(icon, color: AppColors.primaryColor),
             title: Text(
               title,
               style: const TextStyle(fontSize: 22.0),
