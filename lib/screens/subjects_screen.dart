@@ -36,12 +36,9 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   bool _isSearching = false;
 
-  RxList<SubjectModel> filteredSubjects = RxList<SubjectModel>();
-
   @override
   void initState() {
     super.initState();
-    filteredSubjects = widget.subjects;
     _filteredSubjectsController.updateFilteredSubjects(widget.subjects);
   }
 
