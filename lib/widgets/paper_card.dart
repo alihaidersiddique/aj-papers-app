@@ -38,7 +38,7 @@ class _PaperCardState extends State<PaperCard> {
       );
       Get.toNamed(
         AppText.pdfScreen,
-        arguments: filePath,
+        arguments: [filePath, fileName],
       );
 
       setState(() {
@@ -58,7 +58,7 @@ class _PaperCardState extends State<PaperCard> {
       if (await doesFileExist(widget.paper.filePath)) {
         Get.toNamed(
           AppText.pdfScreen,
-          arguments: widget.paper.filePath,
+          arguments: [widget.paper.filePath, widget.paper.name],
         );
       } else {
         final filePath = await downloadPDF(url, fileName);
@@ -70,7 +70,7 @@ class _PaperCardState extends State<PaperCard> {
         );
         Get.toNamed(
           AppText.pdfScreen,
-          arguments: filePath,
+          arguments: [filePath, fileName],
         );
 
         setState(() {
@@ -122,18 +122,20 @@ class _PaperCardState extends State<PaperCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              color: AppColors.primaryColor,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              child: Text(
-                '${widget.paper.season} ${widget.paper.year}',
-                textScaleFactor: 1.5,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
+            Flexible(
+              child: Container(
+                color: AppColors.primaryColor,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                child: Text(
+                  '${widget.paper.season} ${widget.paper.year}',
+                  // textScaleFactor: 1.2,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ),
             Text(

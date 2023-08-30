@@ -53,7 +53,8 @@ final appRoutes = [
   ),
   GetPage(
     name: AppText.pdfScreen,
-    page: () => PDFScreen(filePath: Get.arguments),
+    page: () =>
+        PDFScreen(filePath: Get.arguments[0], fileName: Get.arguments[1]),
   ),
   GetPage(
     name: AppText.lectures,
